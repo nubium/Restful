@@ -2,7 +2,7 @@
 	<h1>Drahak Restful panel</h1>
 
 	<!-- Data string representation -->
-	<div id="drahak-panel-resources">
+	<div id="drahak-panel-resources" class="tracy-inner">
 		<table>
 			<thead>
 			<tr>
@@ -19,16 +19,16 @@
 				<?php if ($route->actionDictionary && !isset($route->actionDictionary[$method])) continue; ?>
 				<tr>
 					<th><?php echo $esc($name); ?></th>
-					<td><pre><?php echo $esc($route->mask); ?></pre></td>
+					<td><pre><?php echo $esc($route->getMask()); ?></pre></td>
 					<td>
-						<?php echo isset($route->defaults['presenter']) ?
-							$route->defaults['presenter'] :
+						<?php echo isset($route->getDefaults()['presenter']) ?
+							$route->getDefaults()['presenter'] :
 							''; ?></td>
 					<td>
 						<?php
 						echo isset($route->actionDictionary[$method]) ?
 							$route->actionDictionary[$method] :
-							(isset($route->defaults['action']) ? $route->defaults['action'] : '');
+							(isset($route->getDefaults()['action']) ? $route->getDefaults()['action'] : '');
 						?>
 					</td>
 				</tr>

@@ -17,7 +17,7 @@ interface IResource
 	const DATA_URL = 'application/x-data-url';
 	const FILE = 'application/octet-stream';
 	const FORM = 'multipart/form-data';
-	const NULL = 'NULL';
+	const NULL = NULL;
 
 	/**
 	 * Get element value or array data

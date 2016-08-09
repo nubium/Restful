@@ -30,7 +30,7 @@ class ApiRequestFactory
 
 	/**
 	 * Create API HTTP request 
-	 * @return Nette\Http\IRequest 
+	 * @return IRequest 
 	 */
 	public function createHttpRequest()
 	{

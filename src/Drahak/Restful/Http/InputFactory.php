@@ -78,9 +78,9 @@ class InputFactory extends Object
 	protected function parseRequestBody()
 	{
 		$requestBody = array();
-		$input = Nette\Framework::VERSION_ID >= 20200 ? // Nette 2.2.0 and/or newer
-			$this->httpRequest->getRawBody() :
-			file_get_contents('php://input');
+		$input = class_exists('Nette\Framework') && Nette\Framework::VERSION_ID <= 20200 ? // Nette 2.2.0 and/or newer
+			file_get_contents('php://input'):
+			$this->httpRequest->getRawBody();
 
 		if ($input) {
 			try {

@@ -228,6 +228,9 @@ class ResponseFactory extends Object implements IResponseFactory
 		foreach ($accept as $mimeType) {
 			if ($mimeType === '*/*') return $acceptableTypes[0];
 			foreach ($acceptableTypes as $formatMime) {
+				if (empty($formatMime)) {
+					continue;
+				}
 				if (Strings::contains($mimeType, $formatMime)) {
 					return $formatMime;
 				}

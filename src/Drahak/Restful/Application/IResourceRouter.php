@@ -19,9 +19,10 @@ interface IResourceRouter extends IRouter
 	const DELETE = 32;
 	const HEAD = 64;
 	const PATCH = 128;
+	const OPTIONS = 256;
 
 	/** Combined resource methods */
-	const RESTFUL = 252; // GET | POST | PUT | DELETE | HEAD | PATCH
+	const RESTFUL = 508; // GET | POST | PUT | DELETE | HEAD | PATCH | OPTIONS
 	const CRUD = 188; // PUT | GET | POST | DELETE | PATCH
 
 	/**

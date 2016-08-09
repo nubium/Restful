@@ -27,7 +27,8 @@ class MethodOptions extends Object
 		IResourceRouter::PUT => IRequest::PUT,
 		IResourceRouter::DELETE => IRequest::DELETE,
 		IResourceRouter::HEAD => IRequest::HEAD,
-		IResourceRouter::PATCH => 'PATCH'
+		IResourceRouter::PATCH => 'PATCH',
+		IResourceRouter::OPTIONS => 'OPTIONS',
 	);
 
 	/**

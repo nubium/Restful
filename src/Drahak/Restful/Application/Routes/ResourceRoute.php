@@ -28,7 +28,8 @@ class ResourceRoute extends Route implements IResourceRouter
 		Http\IRequest::PUT => self::PUT,
 		Http\IRequest::HEAD => self::HEAD,
 		Http\IRequest::DELETE => self::DELETE,
-		'PATCH' => self::PATCH
+		'PATCH' => self::PATCH,
+		'OPTIONS' => self::OPTIONS,
 	);
 
 	/**
@@ -69,7 +70,7 @@ class ResourceRoute extends Route implements IResourceRouter
 		$isActionDefined = $this->actionDictionary && !in_array($method, $common) ?
 			isset($this->actionDictionary[$method]) :
 			TRUE;
-		return ($this->flags & $method) == $method && $isActionDefined;
+		return ($this->getFlags() & $method) == $method && $isActionDefined;
 	}
 
 	/**
@@ -132,30 +133,6 @@ class ResourceRoute extends Route implements IResourceRouter
 		}
 
 		return $appRequest;
-	}
-
-	/**
-	 * @param Application\Request $appRequest
-	 * @param Http\Url $refUrl
-	 * @return NULL|string
-	 */
-	public function constructUrl(Application\Request $appRequest, Http\Url $refUrl)
-	{
-		if (count($this->actionDictionary) > 0) {
-			$appRequest = clone $appRequest;
-			$params = $appRequest->getParameters();
-			$params['action'] = 'default'; // so the request matches with route with action dictionary
-			$appRequest->setParameters($params);
-		}
-
-		$url = parent::constructUrl($appRequest, $refUrl);
-		if ($url === NULL) {
-			return NULL;
-		}
-
-		$httpUrl = new Http\Url($url);
-		$httpUrl->query = Strings::replace($httpUrl->query, '/action=([a-zA-Z0-9_+%-]*)/i', '');
-		return $httpUrl->getBasePath() . $httpUrl->getRelativeUrl();
 	}
 
 	/**

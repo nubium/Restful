@@ -74,15 +74,11 @@ class Input extends Object implements IteratorAggregate, IInput, IDataProvider
 	 */
 	public function &__get($name)
 	{
-		try {
-			return parent::__get($name);
-		} catch(MemberAccessException $e) {
-			$data = $this->getData();
-			if (isset($data[$name])) {
-				return $data[$name];
-			}
-			throw $e;
+		$data = $this->getData();
+		if (array_key_exists($name, $data)) {
+			return $data[$name];
 		}
+		throw new \Nette\MemberAccessException('Cannot read an undeclared property '.get_class($this).'::$'.$name.'.');
 	}
 
 	/**
@@ -91,12 +87,8 @@ class Input extends Object implements IteratorAggregate, IInput, IDataProvider
 	 */
 	public function __isset($name)
 	{
-		$isset = parent::__isset($name);
-		if ($isset) {
-			return TRUE;
-		}
 		$data = $this->getData();
-		return isset($data[$name]);
+		return array_key_exists($name, $data);
 	}
 
 	/******************** Iterator aggregate interface ********************/

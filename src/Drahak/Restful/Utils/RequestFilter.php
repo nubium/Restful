@@ -6,7 +6,6 @@ use Nette\ArrayList;
 use Nette\Utils\Paginator;
 use Drahak\Restful\InvalidStateException;
 use Nette\Http\IRequest;
-use Nette\Utils\Strings;
 
 /**
  * RequestFilter
@@ -146,6 +145,12 @@ class RequestFilter extends Object
 		if ($offset === NULL || $limit === NULL) {
 			throw new InvalidStateException(
 				'To create paginator add offset and limit query parameter to request URL'
+			);
+		}
+
+		if ($limit == 0) {
+			throw new InvalidStateException(
+				'Pagination limit cannot be zero'
 			);
 		}
 

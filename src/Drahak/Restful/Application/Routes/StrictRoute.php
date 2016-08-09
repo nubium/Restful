@@ -33,6 +33,7 @@ class StrictRoute extends Object implements IRouter
 		Http\IRequest::DELETE => 'delete',
 		Http\IRequest::HEAD => 'head',
 		'PATCH' => 'patch',
+		'OPTIONS' => 'options',
 	);
 
 	/**

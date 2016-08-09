@@ -47,6 +47,38 @@ class InputTest extends TestCase
 		Assert::same($data, $this->data);
     }
 
+	public function testGetData_callingPropertyName_shouldReturnNameValueFromData()
+	{
+		$data = $this->input->setData(['name' => 'John Doe']);
+		Assert::equal('John Doe', $this->input->name);
+	}
+
+	public function testGetData_callingPropertyData_shouldReturnDataValueFromData()
+	{
+		$data = $this->input->setData(['data' => 'test data', 'private' => 'private value', 'object' => ['id' => 5, 'name' => 'row']]);
+		Assert::equal('test data', $this->input->data);
+	}
+
+	public function testGetData_callingPropertyPrivate_shouldReturnPropertyValueFromData()
+	{
+		$data = $this->input->setData(['data' => 'test data', 'private' => 'private value', 'object' => ['id' => 5, 'name' => 'row']]);
+		Assert::equal('private value', $this->input->private);
+	}
+
+	public function testGetData_callingPropertyObject_shouldReturnObjectValueFromData()
+	{
+		$data = $this->input->setData(['data' => 'test data', 'private' => 'private value', 'object' => ['id' => 5, 'name' => 'row']]);
+		Assert::equal(['id' => 5, 'name' => 'row'], $this->input->object);
+	}
+
+	public function testGetData_callingInvalidProperty_shouldThrowException()
+	{
+		$data = $this->input->setData(['data' => 'test data', 'private' => 'private value', 'object' => ['id' => 5, 'name' => 'row']]);
+		Assert::exception(function() {
+			$this->input->unknown;
+		}, '\Nette\MemberAccessException', 'Cannot read an undeclared property Drahak\Restful\Http\Input::$unknown.');
+	}
+
 	public function testGetValidationField()
 	{
 		$field = $this->mockista->create('Drahak\Restful\Validation\Field');
@@ -94,6 +126,6 @@ class InputTest extends TestCase
 		$result = $this->input->isValid();
 		Assert::true($result);
 	}
-    
+
 }
 \run(new InputTest());

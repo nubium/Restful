@@ -70,6 +70,10 @@ class ResponseFactoryTest extends TestCase
 			->once()
 			->andReturn(array());
 
+		$this->resource->expects('hasData')
+			->once()
+			->andReturn(TRUE);
+
 		$this->mapperContext->expects('getMapper')
 			->once()
 			->with(IResource::JSON)
@@ -100,6 +104,10 @@ class ResponseFactoryTest extends TestCase
 			->once()
 			->andReturn('test');
 
+		$this->resource->expects('hasData')
+			->once()
+			->andReturn(TRUE);
+
 		$this->mapperContext->expects('getMapper')
 			->once()
 			->with('text')
@@ -127,17 +135,25 @@ class ResponseFactoryTest extends TestCase
 			->once()
 			->with('Accept')
 			->andReturn('text');
+
 		$this->resource->expects('getData')
 			->once()
 			->andReturn('test');
+
+		$this->resource->expects('hasData')
+			->once()
+			->andReturn(TRUE);
+
 		$this->request->expects('getQuery')
 			->once()
 			->with('jsonp')
 			->andReturn('callback');
+
 		$this->request->expects('getQuery')
 			->once()
 			->with('prettyPrint')
 			->andReturn(FALSE);
+
 		$this->mapperContext->expects('getMapper')
 			->once()
 			->with(IResource::JSONP)
@@ -155,10 +171,12 @@ class ResponseFactoryTest extends TestCase
 			->once()
 			->with('Accept')
 			->andReturn('drahak/test');
+
 		$this->request->expects('getQuery')
 			->once()
 			->with('jsonp')
 			->andReturn(FALSE);
+
 		$this->request->expects('getQuery')
 			->once()
 			->with('prettyPrint')
@@ -175,6 +193,7 @@ class ResponseFactoryTest extends TestCase
 			->once()
 			->with('jsonp')
 			->andReturn(FALSE);
+
 		$factory = $this->factory;
 		Assert::throws(function() use($factory) {
 			$factory->registerResponse('test/plain', 'Drahak\TestResponse');
@@ -197,6 +216,10 @@ class ResponseFactoryTest extends TestCase
 		$this->resource->expects('getData')
 			->once()
 			->andReturn(array());
+
+		$this->resource->expects('hasData')
+			->once()
+			->andReturn(TRUE);
 
 		$this->mapperContext->expects('getMapper')
 			->once()
@@ -223,17 +246,25 @@ class ResponseFactoryTest extends TestCase
 			->once()
 			->with('Accept')
 			->andReturn('*/*');
+
 		$this->resource->expects('getData')
 			->once()
 			->andReturn('test');
+
+		$this->resource->expects('hasData')
+			->once()
+			->andReturn(TRUE);
+
 		$this->request->expects('getQuery')
 			->once()
 			->with('jsonp')
 			->andReturn(NULL);
+
 		$this->request->expects('getQuery')
 			->once()
 			->with('prettyPrint')
 			->andReturn(FALSE);
+
 		$this->mapperContext->expects('getMapper')
 			->once()
 			->with(IResource::JSON)
@@ -260,6 +291,10 @@ class ResponseFactoryTest extends TestCase
 			->once()
 			->andReturn(array());
 
+		$this->resource->expects('hasData')
+			->once()
+			->andReturn(TRUE);
+
 		$this->mapperContext->expects('getMapper')
 			->once()
 			->with(IResource::JSON)
@@ -275,7 +310,7 @@ class ResponseFactoryTest extends TestCase
 			->with('pretty')
 			->andReturn(FALSE);
 
-		$this->factory->prettyPrint = 'pretty';
+		$this->factory->prettyPrintKey = 'pretty';
 		$response = $this->factory->create($this->resource);
 
 		Assert::true($response instanceof TextResponse);

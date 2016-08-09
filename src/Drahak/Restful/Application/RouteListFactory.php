@@ -41,14 +41,16 @@ class RouteListFactory extends Object implements IRouteListFactory
 
 	/**
 	 * @param string $presentersRoot from where to find presenters
+	 * @param bool $autoRebuild enable automatic rebuild of robot loader
 	 * @param IStorage $cacheStorage
 	 * @param RouteAnnotation $routeAnnotation
 	 */
-	public function __construct($presentersRoot, IStorage $cacheStorage, RouteAnnotation $routeAnnotation)
+	public function __construct($presentersRoot, $autoRebuild, IStorage $cacheStorage, RouteAnnotation $routeAnnotation)
 	{
 		$loader = new RobotLoader();
 		$loader->addDirectory($presentersRoot);
 		$loader->setCacheStorage($cacheStorage);
+		$loader->autoRebuild = $autoRebuild;
 		$loader->tryLoad('Drahak\Restful\Application\IResourcePresenter');
 
 		$this->loader = $loader;
@@ -172,11 +174,8 @@ class RouteListFactory extends Object implements IRouteListFactory
 	 */
 	private static function getClassReflection($className)
 	{
-		if (!method_exists($className, 'getReflection')) {
-			throw new InvalidStateException('Invalid class. Missing getReflection method on ' . $className);
-		}
-
-		return $className::getReflection();
+		$class = class_exists('Nette\Reflection\ClassType') ? 'Nette\Reflection\ClassType' : 'ReflectionClass';
+		return new $class($className);
 	}
 
 }

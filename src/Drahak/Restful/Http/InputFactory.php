@@ -66,7 +66,7 @@ class InputFactory extends Object
 		$urlQuery = (array)$this->httpRequest->getQuery();
 		$requestBody = $this->parseRequestBody();
 
-		return array_merge($urlQuery, $requestBody, $postQuery);
+		return array_merge($urlQuery, $postQuery, $requestBody);	// $requestBody must be the last one!!!
 	}
 
 	/**

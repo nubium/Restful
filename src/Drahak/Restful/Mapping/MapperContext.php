@@ -37,6 +37,7 @@ class MapperContext extends Object
 	{
 		$contentType = explode(';', $contentType);
 		$contentType = Strings::trim($contentType[0]);
+		$contentType = $contentType ? $contentType : 'NULL';
 		if (!isset($this->services[$contentType])) {
 			throw new InvalidStateException('There is no mapper for Content-Type: ' . $contentType);
 		}

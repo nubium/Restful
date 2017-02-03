@@ -72,7 +72,7 @@ class ResourceRouterPanel extends Object implements IBarPanel
 	public function getPanel()
 	{
 		ob_start();
-		$esc = callback('Nette\Templating\Helpers::escapeHtml');
+		$esc = ['Nette\Templating\Helpers', 'escapeHtml'];
 		$routes = $this->getResourceRoutes($this->router);
 		$methods = array(
 			IResourceRouter::GET => 'GET',

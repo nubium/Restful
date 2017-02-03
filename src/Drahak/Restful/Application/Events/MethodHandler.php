@@ -57,9 +57,9 @@ class MethodHandler extends Object
 	/**
 	 * On application error
 	 * @param  Application $application 
-	 * @param  Exception   $e           
+	 * @param  \Exception|\Throwable $e
 	 */
-	public function error(Application $application, \Exception $e)
+	public function error(Application $application,$e)
 	{
 		if ($e instanceof NetteBadRequestException && $e->getCode() === 404) {
 			$this->checkAllowedMethods();

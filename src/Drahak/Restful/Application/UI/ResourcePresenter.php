@@ -175,16 +175,24 @@ abstract class ResourcePresenter extends UI\Presenter implements IResourcePresen
 
 	/**
 	 * Create error response from exception
-	 * @param \Exception $e
+	 * @param \Exception|\Throwable $e
 	 * @return \Drahak\Restful\IResource
 	 */ 
-	protected function createErrorResource(\Exception $e)
+	protected function createErrorResource($e)
 	{
-		$resource = $this->resourceFactory->create(array(
-			'code' => $e->getCode(),
-			'status' => 'error',
-			'message' => $e->getMessage()
-		));
+	    if ($e instanceof \Exception || $e instanceof \Throwable) {
+            $resource = $this->resourceFactory->create(array(
+                'code' => $e->getCode(),
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ));
+        } else {
+            $resource = $this->resourceFactory->create(array(
+                'code' => 500,
+                'status' => 'error',
+                'message' => (string)$e,
+            ));
+        }
 		
 		if (isset($e->errors) && $e->errors) {
 			$resource->errors = $e->errors;
@@ -195,9 +203,9 @@ abstract class ResourcePresenter extends UI\Presenter implements IResourcePresen
 
 	/**
 	 * Send error resource to output
-	 * @param \Exception $e
+	 * @param \Exception|\Throwable $e
 	 */
-	protected function sendErrorResource(\Exception $e, $contentType = NULL)
+	protected function sendErrorResource($e, $contentType = NULL)
 	{
 		/** @var Request $request */
 		$request = $this->getHttpRequest();

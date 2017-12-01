@@ -9,15 +9,16 @@ use Nette\Application\Application;
 use Nette\Application\BadRequestException as NetteBadRequestException;
 use Nette\Http\IRequest;
 use Nette\Http\IResponse;
-use Nette\Object;
+use Nette\SmartObject;
 
 /**
  * MethodHandler
  * @package Drahak\Restful\Application
  * @author Drahomír Hanák
  */
-class MethodHandler extends Object
+class MethodHandler
 {
+	use SmartObject;
 
 	/** @var IRequest */
 	private $request;

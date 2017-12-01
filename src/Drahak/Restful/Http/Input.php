@@ -3,7 +3,7 @@ namespace Drahak\Restful\Http;
 
 use ArrayIterator;
 use IteratorAggregate;
-use Nette\Object;
+use Nette\SmartObject;
 use Nette\Http;
 use Nette\Utils\Json;
 use Nette\Utils\Strings;
@@ -20,8 +20,9 @@ use Drahak\Restful\Validation\IValidationScopeFactory;
  *
  * @property array $data
  */
-class Input extends Object implements IteratorAggregate, IInput, IDataProvider
+class Input implements IteratorAggregate, IInput, IDataProvider
 {
+	use SmartObject;
 
 	/** @var array */
 	private $data;

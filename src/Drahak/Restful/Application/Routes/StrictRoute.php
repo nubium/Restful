@@ -1,7 +1,7 @@
 <?php
 namespace Drahak\Restful\Application\Routes;
 
-use Nette\Object;
+use Nette\SmartObject;
 use Nette\Application\IRouter;
 use Nette\Application\Routers\Route;
 use Nette\Http;
@@ -16,8 +16,9 @@ use Drahak\Restful\Application\IResourceRouter;
  * - contrtructs app request to <Module>:<Presenter>:read<Relation[0]><Relation[1]>(<RelationId[0]>, <RelationId[1]>, ...)
  * @author Drahomír Hanák
  */
-class StrictRoute extends Object implements IRouter
+class StrictRoute implements IRouter
 {
+	use SmartObject;
 
 	/** @var string */
 	protected $prefix;

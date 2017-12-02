@@ -131,16 +131,12 @@ class Resource implements ArrayAccess, Serializable, IteratorAggregate, IResourc
 	 * @return mixed
 	 */
 	public function &__get($name)
-	{
-		try {
-			return parent::__get($name);
-		} catch (MemberAccessException $e) {
-			if (isset($this->data[$name])) {
-				return $this->data[$name];
-			}
-			throw $e;
+{
+		if (isset($this->data[$name])) {
+			return $this->data[$name];
 		}
 
+		throw new \Nette\MemberAccessException;
 	}
 
 	/**
@@ -150,11 +146,7 @@ class Resource implements ArrayAccess, Serializable, IteratorAggregate, IResourc
 	 */
 	public function __set($name, $value)
 	{
-		try {
-			parent::__set($name, $value);
-		} catch (MemberAccessException $e) {
-			$this->data[$name] = $value;
-		}
+		$this->data[$name] = $value;
 	}
 
 	/**
@@ -164,7 +156,7 @@ class Resource implements ArrayAccess, Serializable, IteratorAggregate, IResourc
 	 */
 	public function __isset($name)
 	{
-		return !parent::__isset($name) ? isset($this->data[$name]) : TRUE;
+		return isset($this->data[$name]);
 	}
 
 	/**
@@ -174,14 +166,9 @@ class Resource implements ArrayAccess, Serializable, IteratorAggregate, IResourc
 	 */
 	public function __unset($name)
 	{
-		try {
-			parent::__unset($name);
-		} catch (MemberAccessException $e) {
-			if (isset($this->data[$name])) {
-				unset($this->data[$name]);
-				return;
-			}
-			throw $e;
+		if (isset($this->data[$name])) {
+			unset($this->data[$name]);
+			return;
 		}
 	}
 

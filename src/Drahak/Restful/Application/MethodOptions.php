@@ -7,15 +7,16 @@ use Nette\Http\UrlScript;
 use Nette\Http\Request;
 use Nette\Http\IRequest;
 use Traversable;
-use Nette\Object;
+use Nette\SmartObject;
 
 /**
  * MethodOptions
  * @package Drahak\Restful\Application
  * @author Drahomír Hanák
  */
-class MethodOptions extends Object
+class MethodOptions
 {
+	use SmartObject;
 
 	/** @var IRouter */
 	private $router;

@@ -1,7 +1,7 @@
 <?php
 namespace Drahak\Restful\Validation;
 
-use Nette\Object;
+use Nette\SmartObject;
 use Nette\Forms\Form;
 use Nette\Utils\Strings;
 use Nette\Utils\Validators;
@@ -17,8 +17,9 @@ use Nette\Utils\Validators;
  * @property string $expression
  * @property array $argument
  */
-class Rule extends Object
+class Rule
 {
+	use SmartObject;
 
 	/** @var string */
 	protected $field;

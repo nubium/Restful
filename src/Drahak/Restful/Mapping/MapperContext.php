@@ -1,7 +1,7 @@
 <?php
 namespace Drahak\Restful\Mapping;
 
-use Nette\Object;
+use Nette\SmartObject;
 use Nette\Utils\Strings;
 use Drahak\Restful\InvalidStateException;
 
@@ -10,8 +10,9 @@ use Drahak\Restful\InvalidStateException;
  * @package Drahak\Restful\Mapping
  * @author Drahomír Hanák
  */
-class MapperContext extends Object
+class MapperContext
 {
+	use SmartObject;
 
 	/** @var array */
 	protected $services = array();

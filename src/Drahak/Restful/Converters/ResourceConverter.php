@@ -1,7 +1,7 @@
 <?php
 namespace Drahak\Restful\Converters;
 
-use Nette\Object;
+use Nette\SmartObject;
 
 /**
  * ResourceConverter
@@ -9,8 +9,9 @@ use Nette\Object;
  *
  * @property-read IConverter[] $converters
  */
-class ResourceConverter extends Object
+class ResourceConverter
 {
+	use SmartObject;
 
 	/** @var IConverter[] */
 	private $converters = array();

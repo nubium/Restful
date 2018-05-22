@@ -3,7 +3,7 @@ namespace Drahak\Restful\Validation;
 
 use Drahak\Restful\InvalidStateException;
 use Drahak\Restful\InvalidArgumentException;
-use Nette\Object;
+use Nette\SmartObject;
 use Nette\Utils\Strings;
 use Nette\Utils\Validators;
 
@@ -12,8 +12,9 @@ use Nette\Utils\Validators;
  * @package Drahak\Restful\Validation
  * @author Drahomír Hanák
  */
-class Validator extends Object implements IValidator
+class Validator implements IValidator
 {
+	use SmartObject;
 
 	/** @var array Command handle callbacks */
 	public $handle = array(

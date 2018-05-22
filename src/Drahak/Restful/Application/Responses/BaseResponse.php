@@ -6,7 +6,7 @@ use Drahak\Restful\InvalidArgumentException;
 use Drahak\Restful\Mapping\IMapper;
 use Nette\Application\IResponse;
 use Nette\Http\IRequest;
-use Nette\Object;
+use Nette\SmartObject;
 
 /**
  * BaseResponse
@@ -16,8 +16,9 @@ use Nette\Object;
  *  @property-read string $contentType
  *  @property-write IMapper $mapper
  */
-abstract class BaseResponse extends Object implements IResponse
+abstract class BaseResponse implements IResponse
 {
+	use SmartObject;
 
 	/** @var array|\stdClass|\Traversable */
 	protected $data;

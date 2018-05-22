@@ -113,7 +113,7 @@ class XmlMapper extends Object implements IMapper
 	{
 		try {
 			$useErrors = libxml_use_internal_errors(true);
-			$xml = simplexml_load_string($data); 
+			$xml = simplexml_load_string($data, NULL, LIBXML_NOCDATA);
 			if ($xml === FALSE) {
 				$error = libxml_get_last_error();
 				throw new MappingException('Input is not valid XML document: ' . $error->message . ' on line ' . $error->line);

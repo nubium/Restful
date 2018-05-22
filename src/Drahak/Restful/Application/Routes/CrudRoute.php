@@ -31,13 +31,18 @@ class CrudRoute extends ResourceRoute
 			$metadata .= ':default';
 		}
         parent::__construct($mask, $metadata, $flags);
-		$this->actionDictionary = array(
+		$actions = array(
 			IResourceRouter::POST => self::ACTION_CREATE,
 			IResourceRouter::GET => self::ACTION_READ,
 			IResourceRouter::PUT => self::ACTION_UPDATE,
 			IResourceRouter::PATCH => self::ACTION_PATCH,
-			IResourceRouter::DELETE => self::ACTION_DELETE
+			IResourceRouter::DELETE => self::ACTION_DELETE,
 		);
+
+		foreach($actions AS $resource => $action)
+		{
+			$this->actionDictionary[$resource] = $action;
+		}
     }
 
 }

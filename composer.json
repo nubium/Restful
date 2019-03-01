@@ -19,7 +19,6 @@
 		"nette/application": "~2.0|~3.0",
 		"nette/bootstrap": "~2.0|~3.0",
 		"nette/caching": "~2.0|~3.0",
-		"nette/deprecated": "~2.0|~3.0",
 		"nette/di": "~2.0|~3.0",
 		"nette/http": "~2.0|~3.0",
 		"nette/reflection": "~2.0|~3.0",

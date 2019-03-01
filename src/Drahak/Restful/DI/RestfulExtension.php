@@ -20,7 +20,7 @@ if (!class_exists('Nette\DI\CompilerExtension')) {
 	class_alias('Nette\Config\Helpers', 'Nette\DI\Config\Helpers');
 }
 
-if (isset(Nette\Loaders\NetteLoader::getInstance()->renamed['Nette\Configurator']) || !class_exists('Nette\Configurator')) {
+if (class_exists('Nette\Loaders\NetteLoader') && (isset(Nette\Loaders\NetteLoader::getInstance()->renamed['Nette\Configurator']) || !class_exists('Nette\Configurator'))) {
 	unset(Nette\Loaders\NetteLoader::getInstance()->renamed['Nette\Configurator']);
 	class_alias('Nette\Config\Configurator', 'Nette\Configurator');
 }
@@ -286,13 +286,17 @@ class RestfulExtension extends CompilerExtension
 	 */
 	private function loadResourceRoutePanel(ContainerBuilder $container, $config)
 	{
-		$container->addDefinition($this->prefix('panel'))
-			->setClass('Drahak\Restful\Diagnostics\ResourceRouterPanel')
-			->setArguments(array(
-				$config['security']['privateKey'],
-				isset($config['security']['requestTimeKey']) ? $config['security']['requestTimeKey'] : 'timestamp'
-			))
-			->addSetup('Tracy\Debugger::getBar()->addPanel(?)', array('@self'));
+        $routerPanel = $container->addDefinition($this->prefix('panel'))
+            ->setClass('Drahak\Restful\Diagnostics\ResourceRouterPanel')
+            ->setArguments(array(
+                $config['security']['privateKey'],
+                isset($config['security']['requestTimeKey']) ? $config['security']['requestTimeKey'] : 'timestamp'
+            ));
+        if (class_exists('Tracy\Debugger')) {
+            $routerPanel->addSetup('Tracy\Debugger::getBar()->addPanel(?)', array('@self'));
+        } else {
+            $routerPanel->addSetup('Nette\Diagnostics\Debugger::getBar()->addPanel(?)', array('@self'));
+        }
 
 		$container->getDefinition('application')
 			->addSetup('$service->onStartup[] = ?', array(array($this->prefix('@panel'), 'getTab')));

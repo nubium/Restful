@@ -4,13 +4,16 @@ namespace Drahak\Restful\Diagnostics;
 use Traversable;
 use Drahak\Restful\Application\IResourceRouter;
 use Nette\Application\IRouter;
-use Nette\Templating\Helpers;
+use Latte\Runtime\Filters;
 use Tracy\IBarPanel;
 use Nette\SmartObject;
 use Nette\Utils\Html;
 
 if (!interface_exists('Tracy\IBarPanel')) {
 	class_alias('Nette\Diagnostics\IBarPanel', 'Tracy\IBarPanel');
+}
+if (!class_exists('Latte\Runtime\Filters')) {
+	class_alias('Nette\Templating\Helpers', 'Latte\Runtime\Filters');
 }
 
 /**
@@ -61,7 +64,7 @@ class ResourceRouterPanel implements IBarPanel
 	public function getTab()
 	{
 		$icon = Html::el('img')
-			->src(Helpers::dataStream(file_get_contents(__DIR__ . '/icon.png')))
+			->src(Filters::dataStream(file_get_contents(__DIR__ . '/icon.png')))
 			->height('16px');
 		return '<span class="REST API resource routes">'  .$icon . 'API resources</span>';
 	}
@@ -73,7 +76,7 @@ class ResourceRouterPanel implements IBarPanel
 	public function getPanel()
 	{
 		ob_start();
-		$esc = ['Nette\Templating\Helpers', 'escapeHtml'];
+		$esc = ['Latte\Runtime\Filters', 'escapeHtml'];
 		$routes = $this->getResourceRoutes($this->router);
 		$methods = array(
 			IResourceRouter::GET => 'GET',

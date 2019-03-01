@@ -3,9 +3,13 @@ namespace Drahak\Restful\Mapping;
 
 use Drahak\Restful\Resource\Media;
 use Nette\SmartObject;
-use Nette\Templating\Helpers;
+use Latte\Runtime\Filters;
 use Nette\Utils\Strings;
 use Drahak\Restful\InvalidArgumentException;
+
+if ( !class_exists('Latte\Runtime\Filters')) {
+	class_alias('Nette\Templating\Helpers', 'Latte\Runtime\Filters');
+}
 
 /**
  * DataUrlMapper - encode or decode base64 file
@@ -31,7 +35,7 @@ class DataUrlMapper implements IMapper
 				'DataUrlMapper expects object of type Media, ' . (gettype($data)) . ' given'
 			);
 		}
-		return Helpers::dataStream((string)$data, $data->getContentType());
+		return Filters::dataStream((string)$data, $data->getContentType());
 	}
 
 	/**

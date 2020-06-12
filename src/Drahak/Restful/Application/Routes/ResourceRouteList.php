@@ -20,7 +20,7 @@ class ResourceRouteList extends RouteList
 	 *
 	 * @throws InvalidStateException
 	 */
-	public function offsetSet($index, $route)
+	public function offsetSet($index, $route): void
 	{
 		if (!$route instanceof IResourceRouter && !$route instanceof ResourceRouteList) {
 			throw new InvalidStateException('ResourceRouteList expects IResourceRoute, ' . get_class($route) . ' given.');

@@ -109,9 +109,8 @@ class ResourceRoute extends Route implements IResourceRouter
 
 	/**
 	 * @param Http\IRequest $httpRequest
-	 * @return Application\Request|NULL
 	 */
-	public function match(Http\IRequest $httpRequest)
+	public function match(Http\IRequest $httpRequest): ?array
 	{
 		$appRequest = parent::match($httpRequest);
 		if (!$appRequest) {
@@ -126,10 +125,8 @@ class ResourceRoute extends Route implements IResourceRouter
 
 		// If there is action dictionary, set method
 		if ($this->actionDictionary) {
-			$parameters = $appRequest->getParameters();
-			$parameters['action'] = $this->actionDictionary[$methodFlag];
-			$parameters['action'] = self::formatActionName($this->actionDictionary[$methodFlag], $parameters);
-			$appRequest->setParameters($parameters);
+			$appRequest['action'] = $this->actionDictionary[$methodFlag];
+			$appRequest['action'] = self::formatActionName($this->actionDictionary[$methodFlag], $appRequest);
 		}
 
 		return $appRequest;

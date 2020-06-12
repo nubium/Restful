@@ -8,7 +8,7 @@ use Nette\Caching\Storages\FileStorage;
 use Nette\DI\CompilerExtension;
 use Nette\Configurator;
 use Nette\DI\ContainerBuilder;
-use Nette\DI\ServiceDefinition;
+use Nette\DI\Definitions\ServiceDefinition;
 use Nette\DI\Statement;
 use Tracy\Debugger;
 use Nette\Loaders\RobotLoader;
@@ -54,7 +54,7 @@ class RestfulExtension extends CompilerExtension
 		'timeFormat' => 'c',
 		'cacheDir' => '%tempDir%/cache',
 		'jsonpKey' => 'jsonp',
-                'prettyPrint' => TRUE,
+		'prettyPrint' => TRUE,
 		'prettyPrintKey' => 'pretty',
 		'routes' => array(
 			'generateAtStart' => FALSE,
@@ -78,7 +78,7 @@ class RestfulExtension extends CompilerExtension
 	public function loadConfiguration()
 	{
 		$container = $this->getContainerBuilder();
-		$config = $this->getConfig($this->defaults);
+		$config = \Nette\DI\Config\Helpers::merge($this->getConfig(), $this->defaults);
 
 		// Additional module
 		$this->loadRestful($container, $config);
@@ -95,7 +95,7 @@ class RestfulExtension extends CompilerExtension
 	public function beforeCompile()
 	{
 		$container = $this->getContainerBuilder();
-		$config = $this->getConfig($this->defaults);
+		$config = \Nette\DI\Config\Helpers::merge($this->getConfig(), $this->defaults);
 
 		$resourceConverter = $container->getDefinition($this->prefix('resourceConverter'));
 		$services = $container->findByTag(self::CONVERTER_TAG);
@@ -346,7 +346,7 @@ class RestfulExtension extends CompilerExtension
 	{
 		$definitionas = $container->getDefinitions();
 		foreach ($definitionas as $definition) {
-			if ($definition->class === $type) {
+			if (property_exists($definition, 'class') && $definition->class === $type) {
 				return $definition;
 			}
 		}
